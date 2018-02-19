@@ -54,7 +54,7 @@ $(document).ready(function() {
 		userId:userId
     }
     var rs = $.ajax({
-		url:config.url_incomes,
+		url:'http://localhost:3001/money/income',
 		type:'POST',
 		contentType:'application/json',
 		dataType:'json',
@@ -85,11 +85,19 @@ $(document).ready(function() {
 function loadTableBody(tableBodyId, data) {
 	var jsonData = JSON.parse(data);
 	var tBody = '';
+    var totalIncomeAmount = 0;
 	$.each(jsonData, function (index,income) {
-		
+		totalIncomeAmount += income.amount;
 		tBody +=  "<tr> <td class='col-sm-3'>" +income.entryDate +" </td> \
 					<td class='col-sm-3'>"+income.amount+"</td> \
 					<td>"+income.note+"</td> </tr>";
+					console.log("Total amount = "+totalIncomeAmount);
 	});
+	
 	$(tableBodyId).html(tBody);
+	$('#label_total_income').html("Total income "+totalIncomeAmount);
 }
+
+$('#btnSubmit').dblclick(function(e){
+	e.preventDefault();
+  });

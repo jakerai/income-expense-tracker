@@ -53,7 +53,7 @@ $(document).ready(function() {
 		userId:userId
     }
     var rs = $.ajax({
-		url:config.url_expenses,
+		url:'http://localhost:3001/money/expense',
 		type:'POST',
 		contentType:'application/json',
 		dataType:'json',
@@ -82,12 +82,14 @@ function loadTableBody(tableBodyId, data) {
 	var jsonData = JSON.parse(data);
 	console.log('length of data='+jsonData.entryDate);
 	var tBody = '';
+	var totalExpenseAmount = 0;
 	$.each(jsonData, function (index,income) {
-		
+		totalExpenseAmount += income.amount;
 		tBody +=  "<tr> <td class='col-sm-3'>" +income.entryDate +" </td> \
 					<td class='col-sm-3'>"+income.amount+"</td> \
 					<td>"+income.note+"</td> </tr>";
 	});
+	$('#label_total_expense').html("Total income "+totalExpenseAmount);
 	$(tableBodyId).html(tBody);
 }
 $('#btnSubmit').dblclick(function(e){
