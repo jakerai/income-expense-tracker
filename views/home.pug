@@ -1,0 +1,87 @@
+extends layouthome
+
+block content
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+    a.navbar-brand(href='#') inex
+    button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse
+      ul.navbar-nav.mr-auto
+        li.nav-item.active
+          a#userId.nav-link(href='#')
+            | #{user.username}
+      form.form-inline.my-2.my-sm-0 
+      ul.navbar-nav   
+        li.nav-item.dropdown
+          a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+          .dropdown-menu.dropdown-menu-right(aria-labelledby='navbarDropdown')
+            a.dropdown-item(href='#') Settings
+             .dropdown-divider
+            a.dropdown-item(href='/') Logout
+            
+  .container-fluid
+    .row
+      .col-6
+        h5.text-margin Income 
+         .row 
+            .col-4
+             label.label-text Income Amount
+            .col-4   
+             label.label-text Note 
+         .row
+            .col-4
+             span#error_incomeAmount.error This field is required    
+             input#income_incomeAmount.text-small(type='text' name='incomeAmount')    
+            .col-4
+             span#error_incomeNote.error This field is required     
+             input#income_incomeNote.text-large(type='text' name='incomeNote')
+         .row
+            .col-4
+             button#btnAddIncome.btn.btn-dark.btn-sm.button-width(type='submit') Add  
+            .col-4
+             label.label-text Total Income #{total_income}   
+      .col-6       
+        h5.text-margin Expense 
+          .row 
+            .col-4
+             label.label-text Expense Amount
+            .col-4   
+             label.label-text Note 
+          .row
+            .col-4 
+             span#error_expenseAmount.error This field is required    
+             input#expense_expenseAmount.text-small(type='text' name='expenseAmount')    
+            .col-4
+             span#error_expenseNote.error This field is required     
+             input#expense_expenseNote.text-large(type='text' name='expenseNote')   
+          .row
+            .col-4
+             button#btnAddExpense.btn.btn-dark.btn-sm.button-width(type='submit') Add
+            .col-4
+             label.label-text Total Expense #{total_expense}     
+    .row
+      .col-6
+        table#tableIncome.table.table-sm.table-inverse.table-income-margin
+          thead
+            tr
+              th.col-sm-3 Entry Date
+              th.col-sm-3 Amount
+              th Note
+          tbody#tableIncomeBody
+            tr
+              td.col-sm-3 
+              td.col-sm-3 
+              td 
+      .col-6  
+        table#tableExpense.table.table-sm.table-inverse.table-expense-margin
+          thead
+            tr
+              th.col-sm-3 Entry Date
+              th.col-sm-3 Amount
+              th Note
+          tbody#tableExpenseBody
+            tr
+              td.col-sm-3 
+              td.col-sm-3 
+              td 
+            

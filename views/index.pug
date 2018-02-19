@@ -1,0 +1,65 @@
+extends layout
+
+block content
+   
+ .container-fluid
+   .row
+     .col-6
+      h5.head-title Have better control over your money by organizing your income and daily expenses!
+     .col-6
+        form#formLogin(method='post' action='/users/login')
+          .row
+            .col-4
+              label.label-text Email or Username
+              br
+              input#signin_id.text-margin(type='text' name='id')
+              span.error This field is required
+            .col-4
+              label.label-text Password
+              br
+              input#signin_password.text-margin(type='password' name='password')
+              span.error This field is required
+            .col-4
+              br
+              button#btnLogin.btn.btn-dark.btn-sm.button-width(type='submit') Login
+          .row
+            .col-auto
+              p.text Create A New Account
+        form#formSignup(method='post' action='/users/signup')
+         .row
+            .col-4
+              label.label-text First Name
+              br
+              input#signup_firstName.text-margin(type='text' name='firstName')
+              span.error This field is required
+            .col-4
+              label.label-text Last Name
+              br
+              input#signup_lastName.text-margin(type='text' name='lastName')
+              span.error This field is required
+            .col-4
+              label.label-text Email
+              br
+              input#signup_email.text-margin(type='text' name='email')
+              span.error A valid email address is required
+         .row
+            .col-4
+              label.label-text Username
+              br
+              input#signup_username.text-margin(type='text' name='username')
+              span#error_username.error This field is required
+            .col-4
+              label.label-text Password
+              br
+              input#signup_password.text-margin(type='password' name='password')
+              span.error This field is required
+            .col-4
+              label.label-text Confirm Password
+              br
+              input#signup_passwordConfirm.text-margin(type='password' name='passwordConfirm')
+              span#error_passwordconfirm.error This field is required
+         .row
+            .col-4
+              button#btnSignup.btn.btn-dark.btn-sm.button-width(type='submit') Sign up   
+      
+

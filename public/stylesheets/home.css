@@ -1,0 +1,66 @@
+body {
+    
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-color:#d5e0f2;
+  }
+
+  .text-small {
+    margin-top: 0px;
+    margin-bottom: 1px;
+    margin-left: 1px;
+    margin-right: 2px;
+    font-size: 12px;
+    height: 25px;
+    width: 150px;
+   }
+    .text-large {
+      margin-top: 0px;
+      margin-bottom: 1px;
+      margin-left: 1px;
+      margin-right: 2px;
+      font-size: 12px;
+      height: 25px;
+      width: 200px;
+      }
+
+  .button-width {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    height: 25px;
+    width: 100px;
+    font-size: 12px;
+    }
+    
+    label.label-text {
+      margin-left: 1px;
+      margin-right: 1px;
+      margin-top: 10px;
+      margin-bottom: 0px;
+      font: normal 16px courier !important;
+      color: black;
+    }
+
+    h5.text-margin {
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
+    table.table-income-margin {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      margin-left: 0px;
+      margin-right:2px;
+      background-color:green;
+      color: white;
+    }
+
+    table.table-expense-margin {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      margin-left: 2px;
+      margin-right:0px;
+      color: white;
+      background-color:rgb(27, 27, 31);
+    }
