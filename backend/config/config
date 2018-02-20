@@ -1,0 +1,6 @@
+module.exports = {
+
+    secret: 'incomehainaexpensehola',
+    database: 'mongodb://iet:iet@ds237858.mlab.com:37858/iet'
+
+};

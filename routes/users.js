@@ -5,23 +5,28 @@ var User = require('../backend/model/user');
 var auth = require('../backend/authentication/authentication');
 var Income = require('../backend/model/income');
 var Expense = require('../backend/model/expense');
+var jwt = require('jsonwebtoken'); // sign with default (HMAC SHA256)
+var config = require('../backend/config/config');
+var app = express();
 
+//this is unprotected resource
+app.set('secret',config.secret);
 
-/* login page. */
+/* authenticates user login. */
 router.post('/login', function (req, res, next) {
 	console.log('login invoked...');
 	var requestParams = req.body;
 	console.log('Request params = ' + JSON.stringify(requestParams));
 	var incomes ={};
 	var expenses = {};
-	User.findOne({ username: requestParams.id }, function (err, Users) {
+	User.findOne({ username: requestParams.id }).lean().exec(function (err, Users) {
+		
 		if (!err) {
 			console.log(Users);
 			if (Users === null) {
-				res.render('index', { user: "You are not registered. Please signup" });
+				res.status(404).render('index', { user: "You are not registered. Please signup" });
 			} else {
 				if (auth.isMatched(requestParams.password, Users.password)) {
-
 					
 					Income.find({ userId: requestParams.id }, function (err, Incomes) {
 						if (!err) {
@@ -45,11 +50,12 @@ router.post('/login', function (req, res, next) {
 
 						}
 					}).sort({ entryDate: 'desc' });
-
-
-					console.log("INCOMES =========" + JSON.stringify(incomes));
-					console.log("EXPENSES =========" + expenses);
-					res.render('home', { user: Users });
+                    //
+                    let token = jwt.sign(Users,app.get('secret'), {
+						expiresIn: 1440 // expires in 1 hour
+					});
+			        
+					res.render('home', {error:false,username:Users.username,token: token});
 
 					//res.render('home', {user:Users,total_income:total_income,total_expense:expense});
 				} else {
@@ -87,6 +93,16 @@ router.post('/usernames', function (req, res, next) {
 		}
 	});
 });
+
+
+//logout
+router.post('/logout', function (req, res, next) {
+	console.log('logout invoked...');
+	var requestParams = req.body;
+	console.log('Request params = ' + JSON.stringify(requestParams));
+	res.json({logout: true});
+});
+
 
 
 /* GET users listing. */

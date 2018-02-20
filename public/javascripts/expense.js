@@ -25,7 +25,7 @@ $(document).ready(function() {
 	  return;
 	} else {
 		//check if amount is numeric
-		var re = new RegExp("[0-9]");
+		var re = new RegExp("^\\d+$");
 		var valid=re.test(expenseAmt); 
 		console.log("is valid="+valid);
 		if(!valid) {
@@ -46,14 +46,15 @@ $(document).ready(function() {
 		$('#error_expenseNote').removeClass("error_show").addClass("error");
 	}  
 
-
+	var token = localStorage.getItem("token");
     var data = {
         expenseAmount:expenseAmt,
 		expenseNote:expenseNote,
-		userId:userId
+		userId:userId,
+		token:token
     }
     var rs = $.ajax({
-		url:'http://localhost:3001/money/expense',
+		url:url.expenses,
 		type:'POST',
 		contentType:'application/json',
 		dataType:'json',
@@ -85,7 +86,15 @@ function loadExpenseTableBody(tableBodyId, data) {
 	var totalExpenseAmount = 0;
 	$.each(jsonData, function (index,expense) {
 		totalExpenseAmount += expense.amount;
-		tBody +=  "<tr> <td class='col-sm-3'>" +expense.entryDate +" </td> \
+		var date = new Date(expense.entryDate),
+		dformat = [date.getMonth()+1,
+				   date.getDate(),
+				   date.getFullYear()].join('/')+' '+
+				  [date.getHours(),
+				   date.getMinutes(),
+				   date.getSeconds()].join(':');
+
+		tBody +=  "<tr> <td class='col-sm-3'>" +dformat +" </td> \
 					<td class='col-sm-3'>"+expense.amount+"</td> \
 					<td>"+expense.note+"</td> </tr>";
 	});

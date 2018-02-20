@@ -4,10 +4,14 @@ var mongoose = require('mongoose');
 var User = require('../backend/model/user');
 var Income = require('../backend/model/income');
 var Expense = require('../backend/model/expense');
+var config = require('../backend/config/config');
+var app = express();
 
+
+app.set('secret',config.secret);
 
 /*POST income */
-router.post('/income',function (req, res, next) {
+router.post('/incomes',function (req, res, next) {
 	console.log('income..invoked');
     var requestParams = req.body;
 	console.log('Request params = '+JSON.stringify(requestParams));
@@ -22,8 +26,9 @@ router.post('/income',function (req, res, next) {
 	 income.save(function (err, incomes) {
 		if (!err) {
 			console.log("No error on saving data...");
-			Income.find({},function(err,Incomes) {
+			Income.find({userId:requestParams.userId},function(err,Incomes) {
 				if (!err) {
+					console.log("Incomes ="+Incomes);
 					res.send(Incomes);
 				} else {
 					res.send(Incomes);	
@@ -41,7 +46,7 @@ router.post('/income',function (req, res, next) {
 
 
 /*POST expense */
-router.post('/expense',function (req, res, next) {
+router.post('/expenses',function (req, res, next) {
 	console.log('expense..invoked');
     var requestParams = req.body;
 	console.log('Request params = '+JSON.stringify(requestParams));
@@ -56,7 +61,7 @@ router.post('/expense',function (req, res, next) {
 	 expense.save(function (err, expenses) {
 		if (!err) {
 			console.log("No error on saving data...");
-			Expense.find({},function(err,Expenses) {
+			Expense.find({userId:requestParams.userId},function(err,Expenses) {
 				if (!err) {
 					res.send(Expenses);
 				} else {

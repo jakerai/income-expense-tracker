@@ -1,3 +1,4 @@
+
 //validation for firstname
 $('#signup_firstName').on('input', function() {
 	var input=$(this);
@@ -33,7 +34,7 @@ $('#signup_username').change('input', function() {
 			}
 
 		var rs = $.ajax({
-			url:'http://localhost:3001/users/usernames',
+			url:url.check_usernames,
 			type:'POST',
 			contentType:'application/json',
 			dataType:'json',

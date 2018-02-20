@@ -28,7 +28,7 @@ $(document).ready(function() {
 	  return;
 	} else {
 		//check if amount is numeric
-		var re = new RegExp("[0-9]");
+		var re = new RegExp("^\\d+$");
 		var valid=re.test(incomeAmt); 
 		console.log("is valid="+valid);
 		if(!valid) {
@@ -47,14 +47,17 @@ $(document).ready(function() {
 	} else {
 		$('#error_incomeNote').removeClass("error_show").addClass("error")
 	}  
-   
+
+	var token = localStorage.getItem("token");
+	   console.log('Token = '+token);
     var data = {
         incomeAmount:incomeAmt,
 		incomeNote:incomeNote,
-		userId:userId
+		userId:userId,
+		token:token
     }
     var rs = $.ajax({
-		url:'http://localhost:3001/money/income',
+		url:url.incomes,
 		type:'POST',
 		contentType:'application/json',
 		dataType:'json',
@@ -88,7 +91,17 @@ function loadIncomeTableBody(tableBodyId, data) {
     var totalIncomeAmount = 0;
 	$.each(jsonData, function (index,income) {
 		totalIncomeAmount += income.amount;
-		tBody +=  "<tr> <td class='col-sm-3'>" +income.entryDate +" </td> \
+
+		var date = new Date(income.entryDate),
+		dformat = [date.getMonth()+1,
+				   date.getDate(),
+				   date.getFullYear()].join('/')+' '+
+				  [date.getHours(),
+				   date.getMinutes(),
+				   date.getSeconds()].join(':');
+
+
+		tBody +=  "<tr> <td class='col-sm-3'>" +dformat+" </td> \
 					<td class='col-sm-3'>"+income.amount+"</td> \
 					<td>"+income.note+"</td> </tr>";
 					

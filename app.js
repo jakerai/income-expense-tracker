@@ -10,6 +10,9 @@ var cors = require('cors');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var money = require('./routes/money');
+let verifyToken = require('./middlewares/verifyToken');
+
+
 
 var app = express();
 
@@ -32,10 +35,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+//unprotected routes
 app.use('/', index);
 app.use('/users', users);
-app.use('/money', money);
+
+//protected routes
+app.use('/money',verifyToken, money);
 
 
 // catch 404 and forward to error handler
