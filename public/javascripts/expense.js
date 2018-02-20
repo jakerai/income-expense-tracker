@@ -63,7 +63,7 @@ $(document).ready(function() {
 		
 		var tableBody = $('#tableExpenseBody');
 		var data = JSON.stringify(res);
-		loadTableBody(tableBody,data);
+		loadExpenseTableBody(tableBody,data);
 		$('#expense_expenseAmount').val("");
 	    $('#expense_expenseNote').val("");
 		_working = false;
@@ -78,16 +78,16 @@ $(document).ready(function() {
 
 
 
-function loadTableBody(tableBodyId, data) {
+function loadExpenseTableBody(tableBodyId, data) {
 	var jsonData = JSON.parse(data);
 	console.log('length of data='+jsonData.entryDate);
 	var tBody = '';
 	var totalExpenseAmount = 0;
-	$.each(jsonData, function (index,income) {
-		totalExpenseAmount += income.amount;
-		tBody +=  "<tr> <td class='col-sm-3'>" +income.entryDate +" </td> \
-					<td class='col-sm-3'>"+income.amount+"</td> \
-					<td>"+income.note+"</td> </tr>";
+	$.each(jsonData, function (index,expense) {
+		totalExpenseAmount += expense.amount;
+		tBody +=  "<tr> <td class='col-sm-3'>" +expense.entryDate +" </td> \
+					<td class='col-sm-3'>"+expense.amount+"</td> \
+					<td>"+expense.note+"</td> </tr>";
 	});
 	$('#label_total_expense').html("Total income "+totalExpenseAmount);
 	$(tableBodyId).html(tBody);

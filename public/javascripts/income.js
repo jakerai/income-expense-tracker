@@ -64,7 +64,7 @@ $(document).ready(function() {
 		console.log('Return = '+data);
 		//get table body by id
 		var tableBody = $('#tableIncomeBody');
-		loadTableBody(tableBody,data); 
+		loadIncomeTableBody(tableBody,data); 
 		//clear fields
 		$('#income_incomeAmount').val("");
 	    $('#income_incomeNote').val("");				
@@ -82,7 +82,7 @@ $(document).ready(function() {
 
 
 
-function loadTableBody(tableBodyId, data) {
+function loadIncomeTableBody(tableBodyId, data) {
 	var jsonData = JSON.parse(data);
 	var tBody = '';
     var totalIncomeAmount = 0;
@@ -91,9 +91,9 @@ function loadTableBody(tableBodyId, data) {
 		tBody +=  "<tr> <td class='col-sm-3'>" +income.entryDate +" </td> \
 					<td class='col-sm-3'>"+income.amount+"</td> \
 					<td>"+income.note+"</td> </tr>";
-					console.log("Total amount = "+totalIncomeAmount);
+					
 	});
-	
+	console.log("Total amount = "+totalIncomeAmount);
 	$(tableBodyId).html(tBody);
 	$('#label_total_income').html("Total income "+totalIncomeAmount);
 }
