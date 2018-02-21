@@ -54,8 +54,10 @@ $(document).ready(function() {
         incomeAmount:incomeAmt,
 		incomeNote:incomeNote,
 		userId:userId,
-		token:token
-    }
+		token:token,
+		pageNo:1,
+		size:10
+}
     var rs = $.ajax({
 		url:url.incomes,
 		type:'POST',

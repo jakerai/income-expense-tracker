@@ -51,7 +51,9 @@ $(document).ready(function() {
         expenseAmount:expenseAmt,
 		expenseNote:expenseNote,
 		userId:userId,
-		token:token
+		token:token,
+		pageNo:1,
+		size:10
     }
     var rs = $.ajax({
 		url:url.expenses,

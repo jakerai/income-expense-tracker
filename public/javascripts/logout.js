@@ -17,8 +17,11 @@ $(document).ready(function () {
                 console.log('Return = ' + data);
 
                 _working = false;
+                localStorage.removeItem('token');
                 localStorage.clear();
-                location.href="/";
+                window.location.replace('/');
+               
+                
             },
             error: function (err) {
                 console.log('Error:' + JSON.stringify(err));

@@ -5,8 +5,10 @@ var User = require('../backend/model/user');
 var auth = require('../backend/authentication/authentication');
 var Income = require('../backend/model/income');
 var Expense = require('../backend/model/expense');
+var HistoryLogin = require('../backend/model/history_login');
 var jwt = require('jsonwebtoken'); // sign with default (HMAC SHA256)
 var config = require('../backend/config/config');
+var userStates = require('../backend/config/userStates');
 var app = express();
 
 //this is unprotected resource
@@ -54,6 +56,20 @@ router.post('/login', function (req, res, next) {
                     let token = jwt.sign(Users,app.get('secret'), {
 						expiresIn: 1440 // expires in 1 hour
 					});
+
+					//record token/login time in db
+					var historyLogin = new HistoryLogin({
+						loggedInTime: new Date(),
+						loggedOutTime:null,
+						token:token,
+						userId:Users._id
+					})
+                    historyLogin.save(function(err,historylogins) {
+                     if(err) {
+                    console.log('could not save login history for user :'+Users._id);
+					 } 
+					 console.log('saved login history for user :'+Users._id);
+					})
 			        
 					res.render('home', {error:false,username:Users.username,token: token});
 
@@ -100,6 +116,17 @@ router.post('/logout', function (req, res, next) {
 	console.log('logout invoked...');
 	var requestParams = req.body;
 	console.log('Request params = ' + JSON.stringify(requestParams));
+	jwt.verify(requestParams.token, app.get('secret'), function(err, decoded) {
+	
+	console.log("Decoded value="+decoded._id);
+	//update database for logout
+	HistoryLogin.findOneAndUpdate({userId:decoded._id},{$set:{loggedOutTime:new Date()}},{ upsert: true, sort: { 'loggedInTime': 'desc'}},function(err,HistoryLogins) {
+	if(err){
+		console.log('Error updating login history '+err);
+	} 	
+	});
+		
+});
 	res.json({logout: true});
 });
 
@@ -123,7 +150,7 @@ router.post('/signup', function (req, res, next) {
 		username: requestParams.username,
 		password: auth.encrypt(requestParams.password),
 		email: requestParams.email,
-		active: true,
+		status: userStates.activated,
 		creationDate: new Date(),
 		lastModified: new Date()
 	});

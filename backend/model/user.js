@@ -32,8 +32,8 @@ var userSchema = new Schema({
 		required: true,
 		trim: true
 	  },
-	active: {
-		type: Boolean
+	state: {
+		type: Number
 		 },
 	creationDate: {
 		type: Date
