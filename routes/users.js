@@ -26,7 +26,7 @@ router.post('/login', function (req, res, next) {
 		if (!err) {
 			console.log(Users);
 			if (Users === null) {
-				res.status(404).render('index', { user: "You are not registered. Please signup" });
+				res.status(404).render('index', { message: "You are not registered. Please signup" });
 			} else {
 				if (auth.isMatched(requestParams.password, Users.password)) {
 					
@@ -75,7 +75,8 @@ router.post('/login', function (req, res, next) {
 
 					//res.render('home', {user:Users,total_income:total_income,total_expense:expense});
 				} else {
-					res.render('index', { user: "Username or Password incorrect" });
+					console.log('username password does not matched')
+					res.render('index', { message: "Username or Password incorrect" });
 				}
 
 			}

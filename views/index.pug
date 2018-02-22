@@ -5,12 +5,12 @@ block content
  .container-fluid
    .row
      .col-6
-      h5.head-title Have better control over your money by organizing your income and daily expenses!
+      h5.head-title #{message}
      .col-6
         form#formLogin(method='post' action='/users/login' name='formLogin')
           .row
             .col-4
-              label.label-text Email or Username
+              label.label-text Username
               br
               input#signin_id.text-margin(type='text' name='id')
               span.error This field is required
